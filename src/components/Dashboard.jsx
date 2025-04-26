@@ -9,8 +9,10 @@ const Dashboard = () => {
   return (
     <div className="bg-zinc-900 flex justify-center p-8 flex-col items-center h-screen w-screen">
       <h1 className="text-white text-2xl sm:text-4xl font-bold">AI Chat Bot</h1>
-      <div className="rounded-md scroll-auto bg-zinc-800 text-white p-8 h-[60%] w-[80%] sm:h-[70%] sm:w-[40%] m-6 sm:m-3">
-        {answer}
+      <div className="rounded-md overflow-auto bg-zinc-800 text-white p-8 h-[60%] w-[80%] sm:h-[70%] sm:w-[50%] m-6 sm:m-3">
+        <pre className="text-sm sm:text-md whitespace-pre-wrap break-words">
+          {answer}
+        </pre>
       </div>
       <div className="flex justify-between items-center sm:w-[50%] rounded-full">
         <input
@@ -20,7 +22,7 @@ const Dashboard = () => {
           placeholder="Ask Anything..."
         />
         <button
-          onClick={() => generateAnswer(input, setAnswer)}
+          onClick={() => { generateAnswer(input, setAnswer); setInput("") }}
           className="text-xl p-3 bg-white hover:cursor-pointer rounded-full"
         >
           <FaArrowUp />
