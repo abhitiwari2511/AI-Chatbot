@@ -14,7 +14,9 @@ export const generateAnswer = async (input, setAnswer) => {
         ],
       }
     );
-    setAnswer(response.data.candidates[0].content.parts[0].text);
+    setAnswer({
+      content: response.data.candidates[0].content.parts[0].text
+    });
   } catch (error) {
     console.error("Error generating answer:", error);
     throw error;

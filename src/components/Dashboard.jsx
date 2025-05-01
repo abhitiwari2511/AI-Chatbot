@@ -1,18 +1,33 @@
 import { useState } from "react";
 import { generateAnswer } from "../utils/fetch";
 import { FaArrowUp } from "react-icons/fa";
+import Loader from "./Loader";
 
 const Dashboard = () => {
   const [input, setInput] = useState("");
   const [answer, setAnswer] = useState("");
+  const [loading, setLoading] = useState(false)
+
+  const handleClick = async () => {
+    setAnswer(""); 
+    setLoading(true);
+    setInput("");
+    await generateAnswer(input, setAnswer);
+    setLoading(false);
+  }
 
   return (
     <div className="bg-zinc-900 flex justify-center p-8 flex-col items-center h-screen w-screen">
       <h1 className="text-white text-2xl sm:text-4xl font-bold">AI Chat Bot</h1>
-      <div className="rounded-md overflow-auto bg-zinc-800 text-white p-8 h-[60%] w-[80%] sm:h-[70%] sm:w-[50%] m-6 sm:m-3">
-        <pre className="text-sm sm:text-md whitespace-pre-wrap break-words">
-          {answer}
-        </pre>
+      <div className="rounded-md overflow-auto overflow-x-hidden bg-zinc-800 text-white p-8 h-[60%] w-[80%] sm:h-[70%] sm:w-[50%] m-6 sm:m-3">
+        <div className="flex justify-center items-center">
+          {loading && <Loader />}
+        </div>
+        {answer && (
+          <pre className="text-sm sm:text-md whitespace-pre-wrap break-words">
+            <span className="text-green-600">AI :</span> {answer.content}
+          </pre>
+        )}
       </div>
       <div className="flex justify-between items-center sm:w-[50%] rounded-full">
         <input
@@ -22,7 +37,7 @@ const Dashboard = () => {
           placeholder="Ask Anything..."
         />
         <button
-          onClick={() => { generateAnswer(input, setAnswer); setInput("") }}
+          onClick={handleClick}
           className="text-xl p-3 bg-white hover:cursor-pointer rounded-full"
         >
           <FaArrowUp />
